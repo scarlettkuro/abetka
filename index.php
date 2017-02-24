@@ -120,10 +120,10 @@ if ($_SERVER['REQUEST_URI'] == '/translit') {
 						$.each(abetka, function(cyr, lat) {
 								text = text.replace(new RegExp(cyr, "g"), lat);
 						}); 
-						text = text.replace(new RegExp("\n", "g"), '<br>');	
 						var text = text.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
 							 return '&#'+i.charCodeAt(0)+';';
 						});
+						text = text.replace(new RegExp("\n", "g"), '<br>');	
 						$('#text').html(text);
 				});
 		});
