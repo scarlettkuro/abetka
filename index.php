@@ -40,12 +40,91 @@ if ($_SERVER['REQUEST_URI'] == '/translit') {
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script>
+			/*
+			 * Ukraїnska abetka
+			*/
+			var abetka = {
+
+				'А' : 'A', 
+				'а' : 'a', 
+				'Б' : 'B', 
+				'б' : 'b', 
+				'В' : 'V', 
+				'в' : 'v', 
+				'Г' : 'H', 
+				'г' : 'h', 
+				'Ґ' : 'G', 
+				'ґ' : 'g', 
+				'Д' : 'D', 
+				'д' : 'd', 
+				'Е' : 'E', 
+				'е' : 'e', 
+				'Є' : 'Ë', 
+				'є' : 'ë', 
+				'Ж' : 'Ž', 
+				'ж' : 'ž', 
+				'З' : 'Z', 
+				'з' : 'z', 
+				'И' : 'Y', 
+				'и' : 'y', 
+				'І' : 'I', 
+				'і' : 'i', 
+				'Ї' : 'Ї', 
+				'ї' : 'і', 
+				'Й' : 'J', //hz
+				'й' : 'j', //hz
+				'К' : 'K', 
+				'к' : 'k', 
+				'Л' : 'L', 
+				'л' : 'l', 
+				'М' : 'M', 
+				'м' : 'm', 
+				'Н' : 'N', 
+				'н' : 'n', 
+				'О' : 'O', 
+				'о' : 'o', 
+				'П' : 'P', 
+				'п' : 'p', 
+				'Р' : 'R', 
+				'р' : 'r', 
+				'С' : 'S', 
+				'с' : 's', 
+				'Т' : 'T', 
+				'т' : 't', 
+				'У' : 'U', 
+				'у' : 'u', 
+				'Ф' : 'F', 
+				'ф' : 'f', 
+				'Х' : 'X', //hz
+				'х' : 'x', //hz
+				'Ц' : 'C', 
+				'ц' : 'c', 
+				'Ч' : 'Č', 
+				'ч' : 'č', 
+				'Ш' : 'Š ', 
+				'ш' : 'š', 
+				'Щ' : 'Ş', 
+				'щ' : 'ş', 
+				'Ь' : '', 
+				'ь' : '', 
+				'Ю' : 'Ü', 
+				'ю' : 'ü', 
+				'Я' : 'Ä', 
+				'я' : 'ä'
+			};
+
 		$(function() {
 				$("form").submit(function(event) {
 					event.preventDefault();
-					$.post('/translit', $(this).serialize(), function(data) {
-						$('#text').html(data);
-					})
+						var text = $('[name=text]').val();
+						$.each(abetka, function(cyr, lat) {
+								text = text.replace(new RegExp(cyr, "g"), lat);
+						}); 
+						text = text.replace(new RegExp("\n", "g"), '<br>');	
+						var text = text.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+							 return '&#'+i.charCodeAt(0)+';';
+						});
+						$('#text').html(text);
 				});
 		});
   </script>
